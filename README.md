@@ -11,20 +11,25 @@ This repository contains a pipeline for video-to-video generation using text pro
   - **Gradio App**: An intuitive web-based interface for easy interaction.
   - **Python Program**: A script-based interface for users preferring command-line interaction.
  
-### Based M=models used
+### Based models 
 
 - [XXMix_9realistic](https://civitai.com/models/47274): Model used for generating life-like video (Recommended for life-like video)
 - [Mistoon_Anime](https://civitai.com/models/24149/mistoonanime): Model used for generating anime-like video (Recommended for anime-like video)
 
-### Motion modules used
+### Motion modules 
 
 - [mm_sd_v15_v2](https://huggingface.co/guoyww/animatediff/blob/main/mm_sd_v15_v2.ckpt): Motion module used for generating segments of the final from the generated images (Recommended)
 - [mm_sd_v15](https://huggingface.co/guoyww/animatediff/blob/main/mm_sd_v15.ckpt) and [mm_sd_v14](https://huggingface.co/guoyww/animatediff/blob/main/mm_sd_v14.ckpt) are some other modules that can be used.
 
-### ControlNets used
+### ControlNets 
 
 - [control_v11p_sd15_openpose](https://huggingface.co/lllyasviel/ControlNet-v1-1/blob/main/control_v11p_sd15_openpose.pth): ControlNet for pose estimation from the given video
-- Upcoming support for depth and canny controlnets too. 
+- Upcoming support for depth and canny controlnets too.
+
+### Prompt Travelling
+
+This is a technique that is used to give the model, instruction at which frame what to do with the output image.
+For example, if in the prompt body it is written like, 30 - face: up, camera: zoomed out, right-hand: waving, then in the output 30th frame, the image will be generated according to the given prompt
 
 ## Installation
 
