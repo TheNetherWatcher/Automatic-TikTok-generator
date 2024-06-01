@@ -80,7 +80,7 @@ python test.py
 ```
 
 After running this, you will be prompted to enter the location of the video, positive prompt (the changes that you want to make in the video), and a negative prompt.
-Negative is set to a default value, but you can edit it if you like.
+Negative prompt is set to a default value, but you can edit it if you like.
 
 ## Upcoming Dedvelopments
 
