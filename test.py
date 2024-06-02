@@ -1,65 +1,59 @@
-import subprocess
+import cv2
 import json
 import os
-import gradio as gr
-import shutil
+import asyncio
 
-default_neg = "(worst quality:1.2), (low quality:1.2), (lowres:1.1), (monochrome:1.1), (greyscale), (multiple views), (comic), (sketch), (bad anatomy), (deformed), (disfigured), (watermark), (multiple views), (mutation hands), (mutation fingers), (extrafingers), (missing fingers), (watermark), (clothes), (covered body)"
-
-def edit_video(video, pos_prompt, neg_prompt=None):
-    print(video)
-    print(pos_prompt)
-
-    print("Video config generating")
-
+async def stylize(video):
     command = f"animatediff stylize create-config {video}"
-    
-    s3 = subprocess.run(command, shell=True, text=True, capture_output=True)
-    # process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    # stdout, stderr = process.communicate(timeout=None)
-    # process.wait()
+    process = await asyncio.create_subprocess_shell(
+        command,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    if process.returncode == 0:
+        return stdout.decode()
+    else:
+        print(f"Error: {stderr.decode()}")
 
-    # print("Video config generated")
+async def start_video_edit(prompt_file):
+    command = f"animatediff stylize generate {prompt_file}"
+    process = await asyncio.create_subprocess_shell(
+        command,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    if process.returncode == 0:
+        return stdout.decode()
+    else:
+        print(f"Error: {stderr.decode()}")
 
-    x = s3.stdout
-    print(x)
-    print(s3.stderr)
+def edit_video(video, pos_prompt):    
+    x = asyncio.run(stylize(video))
     x = x.split("stylize.py")
-
     config = x[18].split("config =")[-1].strip()
     d = x[19].split("stylize_dir = ")[-1].strip()
 
     with open(config, 'r+') as f:
         data = json.load(f)
         data['head_prompt'] = pos_prompt
-        if neg_prompt is None:
-            data['n_prompt'] = default_neg
-        else:
-            data['n_prompt'] = neg_prompt
         data["path"] = "share/Stable-diffusion/xxmix9realistic_v25.safetensors"
 
     os.remove(config)
     with open(config, 'w') as f:
         json.dump(data, f, indent=4)
 
-    print("Prompt modified and started script")
-
-    s = subprocess.run(f"animatediff stylize generate {d} -L 16", shell=True, capture_output=True, text=True)
-
-    out = s.stdout
+    out = asyncio.run(start_video_edit(d))
     out = out.split("Stylized results are output to ")[-1]
     out = out.split("stylize.py")[0].strip()
 
     cwd = os.getcwd()
     video_dir = cwd + "/" + out
 
-    # List of common video file extensions
     video_extensions = {'.mp4', '.avi', '.mkv', '.mov', '.flv', '.wmv'}
-
-    # Initialize variable to store the found video path
     video_path = None
 
-    # Walk through the directory and its subdirectories
     for dirpath, dirnames, filenames in os.walk(video_dir):
         for filename in filenames:
             if os.path.splitext(filename)[1].lower() in video_extensions:
@@ -68,15 +62,22 @@ def edit_video(video, pos_prompt, neg_prompt=None):
         if video_path:
             break
 
-    return video_path
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        print("Error: Could not open video.")
+        exit()
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("End of video.")
+            break
+        cv2.imshow('Video', frame)
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 
 video_path = input("Enter the path to your video: ")
 pos_prompt = input("Enter the what you want to do with the video: ")
-neg_prompt = input(f"This is the default negative prompt: {default_neg} \n If you want to change it enter the ner negative prompt: ")
-
-# edit_video(video_path, pos_prompt, neg_prompt)
-
-if neg_prompt == None:
-    print("The video is stored at", edit_video(video_path, pos_prompt, default_neg))
-else:
-    print("The video is stored at", edit_video(video_path, pos_prompt, neg_prompt))
+print("The video is stored at", edit_video(video_path, pos_prompt))
