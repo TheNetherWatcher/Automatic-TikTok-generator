@@ -1,0 +1,1 @@
+ffmpeg -i %1 -start_number 0 -vf "scale=512:768,fps=8" %%04d.png

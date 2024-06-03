@@ -30,6 +30,7 @@ async def start_video_edit(prompt_file):
         print(f"Error: {stderr.decode()}")
 
 def edit_video(video, pos_prompt):    
+    print(video)
     x = asyncio.run(stylize(video))
     x = x.split("stylize.py")
     config = x[18].split("config =")[-1].strip()

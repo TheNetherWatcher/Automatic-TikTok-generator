@@ -1,0 +1,298 @@
+{
+  "name": "simple",
+  "path": "share/Stable-diffusion/mistoonAnime_v20.safetensors",
+  "motion_module": "models/motion-module/mm_sd_v15_v2.ckpt",
+  "lcm_map":{
+    "enable":true,
+    "start_scale":0.15,
+    "end_scale":0.75,
+    "gradient_start":0.2,
+    "gradient_end":0.75
+  },
+  "compile": false,
+  "seed": [
+    123456
+  ],
+  "scheduler": "euler_a",
+  "steps": 8,
+  "guidance_scale": 3,
+  "clip_skip": 2,
+  "prompt_fixed_ratio": 1.0,
+  "head_prompt": "1girl, wizard, circlet, earrings, jewelry, purple hair,",
+  "prompt_map": {
+    "0":  "",
+    "8":  "((fire magic spell, fire background))",
+    "16":  "((ice magic spell, ice background))",
+    "24":  "((thunder magic spell, thunder background))",
+    "32":  "((skull magic spell, skull background))",
+    "40":  "((wind magic spell, wind background))",
+    "48":  "((stone magic spell, stone background))",
+    "56":  "((holy magic spell, holy background))",
+    "64":  "((star magic spell, star background))",
+    "72":  "((plant magic spell, plant background))",
+    "80":  "((meteor magic spell, meteor background))"
+  },
+  "tail_prompt": "",
+  "n_prompt": [
+    "(worst quality, low quality:1.4),nudity,border,text, patreon, easynegative, negative_hand-neg"
+  ],
+  "is_single_prompt_mode":false,
+  "lora_map": {
+    "share/Lora/add_detail.safetensors":1.0
+  },
+  "ip_adapter_map": {
+      "enable": false,
+      "input_image_dir": "ip_adapter_image/test",
+      "save_input_image": true,
+      "resized_to_square": false,
+      "scale": 0.5,
+      "is_plus_face": false,
+      "is_plus": true
+  },
+  "img2img_map":{
+    "enable": false,
+    "init_img_dir" : "init_imgs/test",
+    "save_init_image": true,
+    "denoising_strength" : 0.8
+  },
+  "region_map" : {
+    "0":{
+      "enable":false,
+      "mask_dir" : "mask/r0",
+      "save_mask": true,
+      "is_init_img" : false,
+      "condition":{
+        "prompt_fixed_ratio": 0.5,
+        "head_prompt": "1girl, wizard, circlet, earrings, jewelry, purple hair,",
+        "prompt_map": {
+          "0":  "",
+          "8":  "((fire magic spell, fire background))",
+          "16":  "((ice magic spell, ice background))",
+          "24":  "((thunder magic spell, thunder background))",
+          "32":  "((skull magic spell, skull background))",
+          "40":  "((wind magic spell, wind background))",
+          "48":  "((stone magic spell, stone background))",
+          "56":  "((holy magic spell, holy background))",
+          "64":  "((star magic spell, star background))",
+          "72":  "((plant magic spell, plant background))",
+          "80":  "((meteor magic spell, meteor background))"
+        },
+        "tail_prompt": "",
+        "ip_adapter_map": {
+          "enable": false,
+          "input_image_dir": "ip_adapter_image/test",
+          "save_input_image": true,
+          "resized_to_square": false
+        }
+      }
+    },
+    "background":{
+      "is_init_img" : false,
+      "hint" : "background's condition refers to the one in root"
+    }
+  },
+  "controlnet_map": {
+    "input_image_dir" : "controlnet_image/test9999",
+    "max_samples_on_vram": 200,
+    "max_models_on_vram" : 3,
+    "save_detectmap": true,
+    "preprocess_on_gpu": true,
+    "is_loop": true,
+    
+    "controlnet_tile":{
+      "enable": true,
+      "use_preprocessor":true,
+      "preprocessor":{
+        "type" : "none",
+        "param":{
+        }
+      },
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    "controlnet_ip2p":{
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_lineart_anime":{
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_openpose":{
+      "enable": true,
+      "use_preprocessor":true,
+      "preprocessor":{
+        "type" : "dwpose",
+        "param":{
+        }
+      },
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0
+    },
+    "controlnet_softedge":{
+      "enable": true,
+      "use_preprocessor":true,
+      "preprocessor":{
+        "type" : "softedge_pidsafe",
+        "param":{
+        }
+      },
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_shuffle": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_depth": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_canny": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_inpaint": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_lineart": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 0.5,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    "controlnet_mlsd": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_normalbae": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_scribble": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_seg": {
+      "enable": true,
+      "use_preprocessor":true,
+      "guess_mode":false,
+      "controlnet_conditioning_scale": 1.0,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0,
+      "control_scale_list":[0.5,0.4,0.3,0.2,0.1]
+    },
+    "controlnet_ref": {
+        "enable": false,
+        "ref_image": "ref_image/naga.png",
+        "attention_auto_machine_weight": 0.5,
+        "gn_auto_machine_weight": 0.5,
+        "style_fidelity": 0.5,
+        "reference_attn": true,
+        "reference_adain": true,
+        "scale_pattern":[1.0]
+    }
+  },
+  "upscale_config": {
+    "scheduler": "k_dpmpp_sde",
+    "steps": 20,
+    "strength": 0.5,
+    "guidance_scale": 10,
+    "controlnet_tile": {
+      "enable": true,
+      "controlnet_conditioning_scale": 1.0,
+      "guess_mode": false,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0
+    },
+    "controlnet_line_anime": {
+      "enable": false,
+      "controlnet_conditioning_scale": 1.0,
+      "guess_mode": false,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0
+    },
+    "controlnet_ip2p": {
+      "enable": false,
+      "controlnet_conditioning_scale": 0.5,
+      "guess_mode": false,
+      "control_guidance_start": 0.0,
+      "control_guidance_end": 1.0
+    },
+    "controlnet_ref": {
+      "enable": false,
+      "use_frame_as_ref_image": false,
+      "use_1st_frame_as_ref_image": false,
+      "ref_image": "ref_image/path_to_your_ref_img.jpg",
+      "attention_auto_machine_weight": 1.0,
+      "gn_auto_machine_weight": 1.0,
+      "style_fidelity": 0.25,
+      "reference_attn": true,
+      "reference_adain": false
+    }
+  },
+  "output":{
+    "format" : "mp4",
+    "fps" : 8,
+    "encode_param":{
+      "crf": 10
+    }
+  }
+}
