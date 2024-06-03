@@ -38,7 +38,7 @@ def edit_video(video, pos_prompt):
     with open(config, 'r+') as f:
         data = json.load(f)
         data['head_prompt'] = pos_prompt
-        data["path"] = "share/Stable-diffusion/xxmix9realistic_v25.safetensors"
+        data["path"] = "models/huggingface/xxmix9realistic_v40.safetensors"
 
     os.remove(config)
     with open(config, 'w') as f:
@@ -62,21 +62,7 @@ def edit_video(video, pos_prompt):
         if video_path:
             break
 
-    cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        print("Error: Could not open video.")
-        exit()
-
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("End of video.")
-            break
-        cv2.imshow('Video', frame)
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
-    cap.release()
-    cv2.destroyAllWindows()
+    return video_path
 
 video_path = input("Enter the path to your video: ")
 pos_prompt = input("Enter the what you want to do with the video: ")

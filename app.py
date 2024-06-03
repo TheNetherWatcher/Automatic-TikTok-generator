@@ -30,7 +30,6 @@ async def start_video_edit(prompt_file):
         print(f"Error: {stderr.decode()}")
 
 def edit_video(video, pos_prompt):    
-    print(video)
     x = asyncio.run(stylize(video))
     x = x.split("stylize.py")
     config = x[18].split("config =")[-1].strip()
@@ -39,7 +38,7 @@ def edit_video(video, pos_prompt):
     with open(config, 'r+') as f:
         data = json.load(f)
         data['head_prompt'] = pos_prompt
-        data["path"] = "share/Stable-diffusion/xxmix9realistic_v25.safetensors"
+        data["path"] = "models/huggingface/xxmix9realistic_v40.safetensors"
 
     os.remove(config)
     with open(config, 'w') as f:
@@ -64,6 +63,8 @@ def edit_video(video, pos_prompt):
             break
 
     return video_path
+
+print("ready")
 
 with gr.Blocks() as interface:
     gr.Markdown("## Video Processor with Text Prompts")
