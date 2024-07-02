@@ -1,9 +1,3 @@
----
-title: Vid2Vid-using-Text-prompt
-app_file: app.py
-sdk: gradio
-sdk_version: 3.35.2
----
 # Automatic TikTok generator
 
 This repository contains a pipeline for video-to-video generation using text prompts. The system leverages AnimateDiff and OpenPose ControlNet for pose estimation, and incorporates a prompt traveling method for improved coherence between the original and generated videos. Users can interact with this pipeline through a Gradio app or a standard Python program.
